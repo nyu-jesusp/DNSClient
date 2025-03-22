@@ -1,3 +1,4 @@
+import dnspython
 import dns.resolver
 
 # Set the IP address of the local DNS server and a public DNS server
@@ -64,7 +65,9 @@ if __name__ == '__main__':
     #local_external_DNS_output(question_type)
     
     # Call the function to compare the results from both DNS servers and print the result
-    result = compare_dns_servers(domainList,question_type)
+    result = query_local_dns_server('example.com',question_type)
+
+    # result = compare_dns_servers(domainList,question_type)
     result = query_local_dns_server('nyu.edu.',question_type)
     print(result)
     

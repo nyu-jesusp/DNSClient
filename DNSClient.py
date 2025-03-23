@@ -1,7 +1,7 @@
 import dns.resolver
 
 # Set the IP address of the local DNS server and a public DNS server
-local_host_ip = '127.0.0.1'
+local_host_ip = ['127.0.0.1']
 real_name_server = '1.1.1.1' # Research public DNS servers to find a valid DNS server IP address to use
 
 
@@ -11,7 +11,7 @@ domainList  = ['example.com.','safebank.com.','google.com.','nyu.edu.','legitsit
 # Define a function to query the local DNS server for the IP address of a given domain name
 def query_local_dns_server(domain,question_type):
     resolver = dns.resolver.Resolver()
-    resolver.nameservers = resolver.nameservers
+    resolver.nameservers = local_host_ip
     answers = resolver.resolve(domain, question_type) # provide the domain and question_type
 
     ip_address = answers[0].to_text()
@@ -20,7 +20,7 @@ def query_local_dns_server(domain,question_type):
 # Define a function to query a public DNS server for the IP address of a given domain name
 def query_dns_server(domain,question_type):
     resolver = dns.resolver.Resolver()
-    resolver.nameservers = resolver.nameservers
+    resolver.nameservers = [real_name_server]
     answers = resolver.resolve(domain, question_type) # provide the domain and question_type
 
     ip_address = answers[0].to_text()
@@ -61,12 +61,12 @@ if __name__ == '__main__':
     question_type = 'A'
 
     # Call the function to print the results from querying both DNS servers
-    local_external_DNS_output(question_type)
+    # local_external_DNS_output(question_type)
     
     # Call the function to compare the results from both DNS servers and print the result
 
-    result = compare_dns_servers(domainList,question_type)
+    # result = compare_dns_servers(domainList,question_type)
     result = query_local_dns_server('nyu.edu.',question_type)
     print(result)
     
-    # print(exfiltrate_info())
+    # print(exfiltrate_info('nyu.edu.',question_type))
